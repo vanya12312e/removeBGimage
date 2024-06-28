@@ -1,20 +1,68 @@
-﻿using System;
-using System.IO;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 
 class AnyToPng
 {
     public static void Main(string[] args)
     {
+        
         AnyToPng anyToPng = new();
-        Console.WriteLine("Input path of photos:");
+        Console.Clear();
+        PrintHeader();
+        
+        Console.WriteLine("Input path of folder:");
 
         string _folderPath = Console.ReadLine();
         _folderPath = _folderPath.Trim('"'); 
 
         anyToPng.MakePNG(_folderPath);
-        anyToPng.MakeTransparent(_folderPath, _folderPath + @"\IsConverted");
+
+        PrintFooter();
+    }
+
+    private static void PrintHeader()
+    {
+        Console.ForegroundColor = ConsoleColor.Cyan;
+       // Console.WriteLine("========================================");
+       // Console.WriteLine("          Welcome to AnyToPng           ");
+        Console.WriteLine(@".---------------------------------------------------------------------------------.
+|                                                                                 |
+|    __        __         _                                       _               |
+|    \ \      / /   ___  | |   ___    ___    _ __ ___     ___    | |_    ___      |
+|     \ \ /\ / /   / _ \ | |  / __|  / _ \  | '_ ` _ \   / _ \   | __|  / _ \     |
+|      \ V  V /   |  __/ | | | (__  | (_) | | | | | | | |  __/   | |_  | (_) |    |
+|       \_/\_/     \___| |_|  \___|  \___/  |_| |_| |_|  \___|    \__|  \___/     |
+|     ____     ____                                                               |
+|    | __ )   / ___|  _ __    ___   _ __ ___     ___   __   __   ___   _ __       |
+|    |  _ \  | |  _  | '__|  / _ \ | '_ ` _ \   / _ \  \ \ / /  / _ \ | '__|      |
+|    | |_) | | |_| | | |    |  __/ | | | | | | | (_) |  \ V /  |  __/ | |         |
+|    |____/   \____| |_|     \___| |_| |_| |_|  \___/    \_/    \___| |_|         |
+|                                                                                 |
+'---------------------------------------------------------------------------------'");
+        Console.ResetColor();
+    }
+
+    private static void PrintFooter()
+    {
+         Console.Clear();
+        Console.ForegroundColor = ConsoleColor.White;
+       // Console.WriteLine("========================================");
+        //Console.WriteLine("          THANK YOU FOR USING           ");
+        Console.WriteLine(@"+-------------------------------------------------------------------+
+| _____   _   _      _      _   _   _  __   __   __   ___    _   _  |
+||_   _| | | | |    / \    | \ | | | |/ /   \ \ / /  / _ \  | | | | |
+|  | |   | |_| |   / _ \   |  \| | | ' /     \ V /  | | | | | | | | |
+|  | |   |  _  |  / ___ \  | |\  | | . \      | |   | |_| | | |_| | |
+|  |_|   |_| |_| /_/   \_\ |_| \_| |_|\_\     |_|    \___/   \___/  |
+| _____    ___    ____      _   _   ____    ___   _   _    ____   _ |
+||  ___|  / _ \  |  _ \    | | | | / ___|  |_ _| | \ | |  / ___| | ||
+|| |_    | | | | | |_) |   | | | | \___ \   | |  |  \| | | |  _  | ||
+||  _|   | |_| | |  _ <    | |_| |  ___) |  | |  | |\  | | |_| | |_||
+||_|      \___/  |_| \_\    \___/  |____/  |___| |_| \_|  \____| (_)|
++-------------------------------------------------------------------+");
+        Console.ResetColor();
+        Console.ReadLine();  
+        
     }
 
     private void MakePNG(string _folderPath)
@@ -22,6 +70,7 @@ class AnyToPng
         string[] _files = Directory.GetFiles(_folderPath);
         string _outputFolderPath = Path.Combine(_folderPath, "IsConverted");
 
+        
         if (!Directory.Exists(_outputFolderPath))
         {
             Directory.CreateDirectory(_outputFolderPath);
@@ -66,12 +115,11 @@ class AnyToPng
 
         Console.ResetColor();
         Console.WriteLine("\nAll files have been processed.");
-        Console.ReadLine();
     }
 
     private bool IsImageFile(string filePath)
     {
-        string[] validExtensions = { ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tiff" };
+        string[] validExtensions = { ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tiff", "web" }; // You can add custom extensions. Example: ,"extension"
         string fileExtension = Path.GetExtension(filePath).ToLower();
         return Array.Exists(validExtensions, ext => ext == fileExtension);
     }
@@ -98,13 +146,14 @@ class AnyToPng
             Bitmap transparentBitmap = new Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb);
 
             Color backgroundColor = bitmap.GetPixel(0, 0);
+            Color targetColor = Color.FromArgb(230, 230, 230); //You can add custom color to delete, just edit the Color.FromArgb.
 
             for (int y = 0; y < bitmap.Height; y++)
             {
                 for (int x = 0; x < bitmap.Width; x++)
                 {
                     Color pixelColor = bitmap.GetPixel(x, y);
-                    if (pixelColor == backgroundColor)
+                    if (pixelColor == backgroundColor || pixelColor == targetColor)
                     {
                         transparentBitmap.SetPixel(x, y, Color.Transparent);
                     }
