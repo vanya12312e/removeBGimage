@@ -12,3 +12,9 @@ G:\C#\Project\obj\Debug\net8.0\refint\Project.dll
 G:\C#\Project\obj\Debug\net8.0\Project.pdb
 G:\C#\Project\obj\Debug\net8.0\Project.genruntimeconfig.cache
 G:\C#\Project\obj\Debug\net8.0\ref\Project.dll
+G:\C#\Project\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+G:\C#\Project\bin\Debug\net8.0\System.Drawing.Common.dll
+G:\C#\Project\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+G:\C#\Project\obj\Debug\net8.0\Project.csproj.AssemblyReference.cache
+G:\C#\Project\obj\Debug\net8.0\Project.sourcelink.json
+G:\C#\Project\obj\Debug\net8.0\Project.csproj.Up2Date
